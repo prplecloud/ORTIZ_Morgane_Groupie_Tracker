@@ -51,37 +51,30 @@ type TypesResponse struct {
 	Results []TypeResult `json:"results"`
 }
 
-// TypeResult represents a single type result from the PokeAPI.
 type TypeResult struct {
 	Name string `json:"name"`
 }
 
-// LocationAreasResponse represents the response structure from the PokeAPI for location areas.
 type ColorResponse struct {
 	Results []ColorResult `json:"results"`
 }
 
-// LocationAreaResult represents a single location area result from the PokeAPI.
 type ColorResult struct {
 	Name string `json:"name"`
 }
 
-// GenerationsResponse represents the response structure from the PokeAPI for generations.
 type GenerationsResponse struct {
 	Results []GenerationResult `json:"results"`
 }
 
-// GenerationResult represents a single generation result from the PokeAPI.
 type GenerationResult struct {
 	Name string `json:"name"`
 }
 
-// PokemonListResponse represents the response structure from the PokeAPI for a list of Pokémon.
 type PokemonListResponse struct {
 	Results []PokemonResult `json:"results"`
 }
 
-// PokemonResult represents a single Pokémon result from the PokeAPI.
 type PokemonResult struct {
 	Type []string `json:"types"`
 }

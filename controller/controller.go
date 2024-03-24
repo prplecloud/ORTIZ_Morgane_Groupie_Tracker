@@ -368,10 +368,8 @@ func FetchPokemonTypes() ([]string, error) {
 }
 
 /*
-// Add FetchPokemonGenerations and FetchPokemonLocationAreas functions
+func FetchPokemonGenerations() ([]string, error) {
 
-	func FetchPokemonGenerations() ([]string, error) {
-		// Call the API to get all Pokémon generations
 		url := "https://pokeapi.co/api/v2/generation/"
 		resp, err := http.Get(url)
 		if err != nil {
@@ -392,8 +390,8 @@ func FetchPokemonTypes() ([]string, error) {
 		return generations, nil
 	}
 
-	func FetchPokemonColor() ([]string, error) {
-		// Call the API to get all Pokémon location areas
+func FetchPokemonColor() ([]string, error) {
+
 		url := "https://pokeapi.co/api/v2/pokemon-color/"
 		resp, err := http.Get(url)
 		if err != nil {
@@ -415,7 +413,7 @@ func FetchPokemonTypes() ([]string, error) {
 	}
 */
 func RenderPokemonPage(w http.ResponseWriter, r *http.Request) {
-	// Fetch Pokémon data based on different attributes
+
 	pokemonsByType, err := FetchPokemonTypes()
 	if err != nil {
 		http.Error(w, "Failed to fetch Pokémon data by type", http.StatusInternalServerError)
@@ -434,7 +432,7 @@ func RenderPokemonPage(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 	*/
-	// Create an empty struct to hold the data
+
 	data := struct {
 		PokeType []string
 		/*PokeColor        []string
@@ -461,7 +459,6 @@ func RenderPokemonPage(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Println(data.PokemonsByFilter)
 
-	// Execute the template with the data
 	if err := InitTemplate.Temp.ExecuteTemplate(w, "collection", data); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
@@ -476,32 +473,28 @@ func AddToFavoritesHandler(w http.ResponseWriter, r *http.Request) {
 
 	pokemonID := r.FormValue("pokemon_id")
 
-	// Read the existing favorites data from JSON file
 	favorites, err := backend.ReadFavorites()
 	if err != nil {
 		http.Error(w, "Failed to read favorites data", http.StatusInternalServerError)
 		return
 	}
 
-	// Add the new pokemonID to the favorites list
 	favorites = append(favorites, pokemonID)
 
-	// Save the updated favorites data back to JSON file
 	err = backend.SaveFavorites(favorites)
 	if err != nil {
 		http.Error(w, "Failed to save favorites data", http.StatusInternalServerError)
 		return
 	}
 
-	// Redirect the user back to the collection page
 	http.Redirect(w, r, "/favoris", http.StatusSeeOther)
 }
 
 func ViewFavoritesHandler(w http.ResponseWriter, r *http.Request) {
-	// Read favorite IDs from the JSON file
+
 	favoriteIDs, err := ReadFavoritesFromJSONFile("favorites.json")
 	if err != nil {
-		if os.IsNotExist(err) { // Handle case where file doesn't exist
+		if os.IsNotExist(err) {
 			favoriteIDs = []string{}
 		} else {
 			fmt.Println("Error reading favorites:", err)
@@ -519,8 +512,6 @@ func ViewFavoritesHandler(w http.ResponseWriter, r *http.Request) {
 		}
 		favoritePokemons = append(favoritePokemons, pokemon)
 	}
-
-	// Execute the template with the favorites data
 	if err := InitTemplate.Temp.ExecuteTemplate(w, "favoris", favoriteIDs); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
@@ -544,17 +535,15 @@ func ReadFavoritesFromJSONFile(filename string) ([]string, error) {
 }
 
 func FetchPokemonByID(id string) (structs.Pokemon, error) {
-	// Construct the URL for fetching Pokémon data based on the ID
+
 	apiUrl := fmt.Sprintf("https://pokeapi.co/api/v2/pokemon/%s", id)
 
-	// Make an HTTP GET request to the API endpoint
 	resp, err := http.Get(apiUrl)
 	if err != nil {
 		return structs.Pokemon{}, err
 	}
 	defer resp.Body.Close()
 
-	// Decode the JSON response into a Pokemon struct
 	var pokemon structs.Pokemon
 	err = json.NewDecoder(resp.Body).Decode(&pokemon)
 	if err != nil {
