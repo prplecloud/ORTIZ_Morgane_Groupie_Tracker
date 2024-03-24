@@ -1,0 +1,49 @@
+{{define "pokemon"}}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<header>
+    <a href="http://localhost:8080/home"><img src="/static/images/logo.png" class="logo"></a>
+    <a href="http://localhost:8080/collection" style="text-decoration: none;"> Collection </a>
+    <a href="http://localhost:8080/categorie" style="text-decoration: none;"> Pokémons</a>
+    <a href="http://localhost:8080/favoris" style="text-decoration: none;"> Favoris </a>
+    <form id="search-form" action="/result" method="GET">
+        <div class="search">
+            <input class="round" type="search" name="query" placeholder="Rechercher" />
+            <input type="submit" class="corner" value="" />
+    </form>
+    </div>
+</header>
+
+<body>
+    <div class="single">
+        <div class="image">
+            <img class="image" src="{{.Image}}" alt="{{.Name}}">
+        </div>
+        <div class="infos">
+            <p> No. {{.ID}}</p>
+            <p class="name-pokemon">{{.Name}}</p>
+            <h3 class="type-title">Types:</h3>
+            <div class="sgl-type">
+                {{range .Type}}
+                <img id="single-type" src="/static/images/{{.}}.png" alt="Pokémon Type">
+                {{end}}
+            </div>
+            <h3 class="attack-title">Attaques</h3>
+            {{.Abilities}}
+            <p class="stat-label">Taille:</p>
+            <p class="text-stat">{{.Height}} cm</p>
+            <p class="stat-label">Poids:</p>
+            <p class="text-stat">{{.Weight}} G</p>
+        </div>
+    </div>
+</body>
+
+</html>
+{{end}}

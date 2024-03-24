@@ -5,10 +5,15 @@ import (
 	"html/template"
 )
 
+var Temp *template.Template
+
 func InitTemplate() {
-	_, err := template.ParseGlob("./templates/*.html")
-	if err != nil {
-		fmt.Printf(fmt.Sprintf("ERREUR => %s", err.Error()))
+
+	temp, errTemp := template.ParseGlob("./templates/*.html")
+	if errTemp != nil {
+		fmt.Printf("Erreur template: %v", errTemp.Error())
 		return
 	}
+	Temp = temp
+
 }

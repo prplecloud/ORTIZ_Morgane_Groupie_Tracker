@@ -1,0 +1,125 @@
+@font-face {
+    font-family: 'Pokemon Hollow';
+    src: url(/static/fonts/Pokemon\ Hollow.ttf);
+}
+
+@font-face {
+    font-family: 'Pokemon Solid';
+    src: url(/static/fonts/Pokemon\ Solid.ttf);
+}
+
+body {
+    font-family: 'Pokemon Solid';
+   background: center / cover url("/static/images/bg_128.jpg") no-repeat ;
+
+}
+
+h1 {
+    font-family: 'Pokemon Solid';
+
+}
+
+a {
+    color: #ffcb05;
+}
+
+
+
+.round {
+    width: 100%;
+    border-radius: 15px;
+    border: 1px #000 solid;
+    padding: 5px 5px 5px 25px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 5;
+}
+
+.corner {
+    position: absolute;
+    top: 3px;
+    left: 5px;
+    height: 20px;
+    width: 20px;
+    z-index: 10;
+    border-radius: 10px;
+    border: none;
+    background: #000 /* url("/static/images/search.jpg") no-repeat*/; 
+}
+
+.search {
+    position: relative;
+    width: 190px;
+    height: 30px;
+}
+
+header {
+    display: flex;
+    background-color: #454545;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+img.type-img {
+    width: 50px;
+    height: 50px;
+}
+
+img.pokemon-image {
+    width: 250px;
+    height: 250px;
+}
+
+.pokemon {
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: space-between;
+    vertical-align: top;
+    margin-left: 70px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 10%;
+    background: rgba(130, 130, 130, 0.5);
+}
+
+.pokemon-type {
+    display: flex;
+    justify-content: flex-start;
+    align-items: baseline;
+    flex-direction: row;
+    
+}
+
+.single {
+    display: flex;
+    flex-direction: row;
+    border-radius: 10%;
+    background: rgba(130, 130, 130, 0.5);
+    justify-content: flex-start;
+    align-items: center;
+    margin: 15px
+}
+
+img#single-type {
+    width: 100px;
+    height: 100px;
+}
+
+.sgl-type {
+    display: flex;
+    justify-content: flex-start;
+    align-items: baseline;
+    flex-direction: row;
+    
+
+}
+
+.infos {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-left: 100px;
+}

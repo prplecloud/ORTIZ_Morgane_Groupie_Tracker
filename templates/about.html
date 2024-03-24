@@ -1,0 +1,27 @@
+{{define "about"}}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+
+<header>
+    <a href="http://localhost:8080/home"><img src="/static/images/logo.png" class="logo"></a>
+    <a href="http://localhost:8080/collection" style="text-decoration: none;"> Collection </a>
+    <a href="http://localhost:8080/categorie" style="text-decoration: none;"> Pokémons</a>
+    <a href="http://localhost:8080/favoris" style="text-decoration: none;"> Favoris </a>
+    <form id="search-form" action="/result" method="GET">
+        <div class="search">
+            <input class="round" type="search" name="query" placeholder="Rechercher" />
+            <input type="submit" class="corner" value="" />
+    </form>
+</div>
+</header>
+
+    <body>
+</body>
+</html>
+{{end}}
