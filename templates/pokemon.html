@@ -42,6 +42,10 @@
             <p class="stat-label">Poids:</p>
             <p class="text-stat">{{.Weight}} G</p>
         </div>
+        <form action="/add-to-favorites" method="POST">
+            <input type="hidden" name="pokemon_id" value="{{ .ID }}">
+            <button type="submit">Add to Favorites</button>
+        </form>
     </div>
 </body>
 

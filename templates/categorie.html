@@ -35,11 +35,11 @@
             <img class="type-img" src="/static/images/{{.}}.png"></p>
             {{end}}
         </div>
-    </div>
     <form action="/add-to-favorites" method="POST">
         <input type="hidden" name="pokemon_id" value="{{ .ID }}">
         <button type="submit">Add to Favorites</button>
     </form>
+</div>
     {{end}}
     
 </body>

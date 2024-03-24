@@ -2,7 +2,6 @@ package backend
 
 import (
 	"encoding/json"
-	"io"
 	"os"
 	"pokeapi/structs"
 )
@@ -27,22 +26,19 @@ func LoadData() ([]structs.Json, error) {
 }
 
 func ReadFavorites() ([]string, error) {
-	// Open the JSON file
-	file, err := os.Open("favorites.json")
+	// Read the favorites data from JSON file
+	fileData, err := os.ReadFile("favorites.json")
 	if err != nil {
-		return nil, err
-	}
-	defer file.Close()
-
-	// Read the JSON data from the file
-	jsonData, err := io.ReadAll(file)
-	if err != nil {
+		// If the file doesn't exist or is empty, return an empty slice
+		if os.IsNotExist(err) || len(fileData) == 0 {
+			return []string{}, nil
+		}
 		return nil, err
 	}
 
-	// Unmarshal the JSON data into a slice of strings
 	var favorites []string
-	if err := json.Unmarshal(jsonData, &favorites); err != nil {
+	err = json.Unmarshal(fileData, &favorites)
+	if err != nil {
 		return nil, err
 	}
 

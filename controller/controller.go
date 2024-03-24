@@ -498,11 +498,11 @@ func AddToFavoritesHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func ViewFavoritesHandler(w http.ResponseWriter, r *http.Request) {
-	// Read favorites from the JSON file
-	favorites, err := ReadFavoritesFromJSONFile("favorites.json")
+	// Read favorite IDs from the JSON file
+	favoriteIDs, err := ReadFavoritesFromJSONFile("favorites.json")
 	if err != nil {
 		if os.IsNotExist(err) { // Handle case where file doesn't exist
-			favorites = []structs.PokemonDetails{}
+			favoriteIDs = []string{}
 		} else {
 			fmt.Println("Error reading favorites:", err)
 			http.Error(w, "Failed to read favorites", http.StatusInternalServerError)
@@ -510,31 +510,56 @@ func ViewFavoritesHandler(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	// Render the favorites data as HTML or JSON, depending on the request
-	if r.Header.Get("Accept") == "application/json" {
-		w.Header().Set("Content-Type", "application/json")
-		json.NewEncoder(w).Encode(favorites)
-	} else {
-		// Render favorites as HTML (you can use a template engine like html/template)
-		fmt.Fprintf(w, "<h1>Favorite Pokémon</h1>")
-		for _, pokemon := range favorites {
-			fmt.Fprintf(w, "<p>%s (ID: %d)</p>", pokemon.Name, pokemon.ID)
+	var favoritePokemons []structs.Pokemon
+	for _, id := range favoriteIDs {
+		pokemon, err := FetchPokemonByID(id)
+		if err != nil {
+			fmt.Printf("Error fetching Pokémon data for ID %s: %v\n", id, err)
+			continue
 		}
+		favoritePokemons = append(favoritePokemons, pokemon)
+	}
+
+	// Execute the template with the favorites data
+	if err := InitTemplate.Temp.ExecuteTemplate(w, "favoris", favoriteIDs); err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
 	}
 }
 
-func ReadFavoritesFromJSONFile(filename string) ([]structs.PokemonDetails, error) {
+func ReadFavoritesFromJSONFile(filename string) ([]string, error) {
 	file, err := os.Open(filename)
 	if err != nil {
 		return nil, err
 	}
 	defer file.Close()
 
-	var favorites []structs.PokemonDetails
-	err = json.NewDecoder(file).Decode(&favorites)
+	var favoriteIDs []string
+	err = json.NewDecoder(file).Decode(&favoriteIDs)
 	if err != nil {
 		return nil, err
 	}
 
-	return favorites, nil
+	return favoriteIDs, nil
+}
+
+func FetchPokemonByID(id string) (structs.Pokemon, error) {
+	// Construct the URL for fetching Pokémon data based on the ID
+	apiUrl := fmt.Sprintf("https://pokeapi.co/api/v2/pokemon/%s", id)
+
+	// Make an HTTP GET request to the API endpoint
+	resp, err := http.Get(apiUrl)
+	if err != nil {
+		return structs.Pokemon{}, err
+	}
+	defer resp.Body.Close()
+
+	// Decode the JSON response into a Pokemon struct
+	var pokemon structs.Pokemon
+	err = json.NewDecoder(resp.Body).Decode(&pokemon)
+	if err != nil {
+		return structs.Pokemon{}, err
+	}
+
+	return pokemon, nil
 }

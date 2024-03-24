@@ -23,8 +23,13 @@
 
 
 <body>
-    regroupe tt les favs
-</body>
+    <h1>Favorite Pokémon</h1>
+    <ul>
+    {{range .}}
+        <li>{{.}}</li>
+        {{.Name}}
+    {{end}}
+    </ul></body>
 
 </html>
 {{end}}

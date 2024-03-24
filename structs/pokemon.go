@@ -21,6 +21,16 @@ type Json struct {
 	LocationAreaEncounters string   `json:"location_area_encounters"`
 }
 
+type Pokemon struct {
+	ID        int       `json:"id"`
+	Name      string    `json:"name"`
+	Abilities []Ability `json:"abilities"`
+	Types     []string  `json:"types"`
+}
+
+type PokeID struct {
+	ID int `json:"id"`
+}
 type PokemonForm struct {
 	Name string `json:"name"`
 }
