@@ -226,21 +226,19 @@ func GetPokemonDetails(name string) (structs.PokemonDetails, error) {
 }
 
 func FilterHandler(w http.ResponseWriter, r *http.Request) {
-	//Retrieve types for passing them to the template.
 	types, err := FetchPokemonTypes()
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 
-	/*	//Retrieve generations for passing them to the template.
+	/*
 		generations, err := FetchPokemonGenerations()
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
 		}
 
-		//Retrieve location area encounters for passing them to the template.
 		color, err := FetchPokemonColor()
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -279,7 +277,6 @@ func FilterHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func FetchPokemonsByFilters(typeName /*, generationName, colorName */ string) ([]structs.PokemonDetails, error) {
-	// Call the API to get all Pokémon filtered by type, generation, and location area
 	url := "https://pokeapi.co/api/v2/type/" + typeName
 
 	/*if typeName != "" {
