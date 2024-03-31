@@ -509,7 +509,8 @@ func ViewFavoritesHandler(w http.ResponseWriter, r *http.Request) {
 		}
 		favoritePokemons = append(favoritePokemons, pokemon)
 	}
-	if err := InitTemplate.Temp.ExecuteTemplate(w, "favoris", favoriteIDs); err != nil {
+
+	if err := InitTemplate.Temp.ExecuteTemplate(w, "favoris", favoritePokemons); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}

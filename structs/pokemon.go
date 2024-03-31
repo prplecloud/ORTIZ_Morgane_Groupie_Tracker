@@ -22,10 +22,16 @@ type Json struct {
 }
 
 type Pokemon struct {
-	ID        int       `json:"id"`
-	Name      string    `json:"name"`
-	Abilities []Ability `json:"abilities"`
-	Types     []string  `json:"types"`
+	ID    int         `json:"id"`
+	Image string      `json:"image"`
+	Name  string      `json:"name"`
+	Type  []TypeEntry `json:"types"`
+}
+
+type TypeEntry struct {
+	Type struct {
+		Name string `json:"name"`
+	} `json:"type"`
 }
 
 type PokeID struct {
